@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE">
+	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+	<title>我的购物车</title>
+
+    <link rel="stylesheet" type="text/css" href="/css/webbase.css" />
+    <link rel="stylesheet" type="text/css" href="/css/pages-cart.css" />
+</head>
+
+<body>
+	<!--head-->
+	<div class="top">
+		<div class="py-container">
+			<div class="shortcut">
+				<ul class="fl">
+					<li class="f-item">在线教育欢迎您！</li>
+
+				</ul>
+				<ul class="fr">
+					<li class="f-item">我的课程</li>
+					<li class="f-item space"></li>
+					<li class="f-item">在线教育</li>
+					<li class="f-item space"></li>
+					<li class="f-item">在线教育会员</li>
+					<li class="f-item space"></li>
+					<li class="f-item">企业采购</li>
+					<li class="f-item space"></li>
+					<li class="f-item">关注网站</li>
+					<li class="f-item space"></li>
+					<li class="f-item">客户服务</li>
+					<li class="f-item space"></li>
+					<li class="f-item">网站导航</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="cart py-container">
+		<!--logoArea-->
+		<div class="logoArea">
+			
+			
+		</div>
+		<!--All goods-->
+		<div class="allgoods">
+			<h4>全部课程<span></span></h4>
+			<div class="cart-main" id="cartList">
+				<div class="yui3-g cart-th">
+					<div class="yui3-u-1-4"><input type="checkbox" name="" id="" value="" /> 全部</div>
+					<div class="yui3-u-1-4">课程</div>
+					<div class="yui3-u-1-8">单价（元）</div>
+				
+					<div class="yui3-u-1-8">小计（元）</div>
+					<div class="yui3-u-1-8">操作</div>
+				</div>
+				<div  class="cart-item-list">
+					<div class="cart-shop">
+
+					</div>
+					<div class="cart-body">
+
+
+					</div>
+				</div>
+
+
+			</div>
+			<div class="cart-tool">
+				<div class="select-all">
+					<input type="checkbox" name=""  value="" />
+					<span>全选</span>
+				</div>
+				<div class="option">
+					<a href="#none">删除选中的课程</a>
+					<a href="#none">移到我的关注</a>
+					<a href="#none">清除下柜课程</a>
+				</div>
+				<div class="toolbar">
+					<div class="chosed">已选择<span>0</span>件课程</div>
+					<div class="sumprice">
+						<span><em>总价（不含运费） ：</em><i class="summoney">100</i></span>
+						<span><em>已节省：</em><i>-¥20.00</i></span>
+					</div>
+					<div class="sumbtn">
+						<a class="sum-btn" onclick="tradeInfo()">结算</a>
+					</div>
+				</div>
+			</div>
+			<div class="clearfix"></div>
+		
+		</div>
+	</div>
+	<!-- 底部栏位 -->
+
+
+<script type="text/javascript" src="/js/plugins/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="/js/plugins/jquery.easing/jquery.easing.min.js"></script>
+<script type="text/javascript" src="/js/plugins/sui/sui.min.js"></script>
+<script type="text/javascript" src="/js/widget/nav.js"></script>
+</body>
+
+</html>
+<script>
+	$(function () {
+		getCartList();
+	})
+	function getCartList(){
+		$.ajax({
+			url : "/cartController/cartList",
+			dataType : "json",
+			type : "post",
+			async: false,
+			success : function (obj) {
+				console.log(obj);
+				var result =  obj.data;
+				console.log(result);
+				showCartList(result);
+			}
+		})
+	}
+
+	//查询拼接页面
+	var price= 0;
+	function showCartList(cartList) {
+		var html = '';
+		html += '<div class="yui3-g cart-th">\n' +
+            '\t\t\t\t\t<div class="yui3-u-1-4"><input type="checkbox" name="" id="" value="" /> 全部</div>\n' +
+            '\t\t\t\t\t<div class="yui3-u-1-4">课程</div>\n' +
+            '\t\t\t\t\t<div class="yui3-u-1-8">单价（元）</div>\n' +
+            '\t\t\t\t\n' +
+            '\t\t\t\t\t<div class="yui3-u-1-8">小计（元）</div>\n' +
+            '\t\t\t\t\t<div class="yui3-u-1-8">操作</div>\n' +
+            '\t\t\t\t</div>';
+
+		//查询拼接页面
+		for (var i = 0; i < cartList.length; i++) {
+			html +='<div class="cart-item-list" >\n' +
+					'\t\t\t\t\t<div class="cart-shop">\n' +
+					'\t\t\t\t\t\t<input type="checkbox" name=""  value="" />\n' +
+					'\t\t\t\t\t\t<span class="shopname self">'+cartList[i].name+'</span>\n' +
+					'\t\t\t\t\t</div>';
+			console.log(cartList[i].courseVOList.length);
+			for (var j = 0; j < cartList[i].courseVOList.length; j++) {
+				price += cartList[i].courseVOList[j].price;
+				html +='<div class="cart-body">\n' +
+                    '\t\t\t\t\t\t<div class="cart-list">\n' +
+                    '\t\t\t\t\t\t\t<ul class="goods-list yui3-g">\n' +
+                    '\t\t\t\t\t\t\t\t<li class="yui3-u-1-24">\n' +
+                    '\t\t\t\t\t\t\t\t\t<input type="checkbox" name="box2"  value="" />\n' +
+                    '\t\t\t\t\t\t\t\t</li>\n' +
+                    '\t\t\t\t\t\t\t\t<li class="yui3-u-11-24">\n' +
+                    '\t\t\t\t\t\t\t\t\t<div class="good-item">\n' +
+                    '\t\t\t\t\t\t\t\t\t\t<div class="item-img"><img src="'+cartList[i].courseVOList[j].image+'" /></div>\n' +
+                    '\t\t\t\t\t\t\t\t\t\t<div class="item-msg">'+cartList[i].courseVOList[j].title+'</div>\n' +
+                    '\t\t\t\t\t\t\t\t\t</div>\n' +
+                    '\t\t\t\t\t\t\t\t</li>\n' +
+                    '\t\t\t\t\t\t\t\t\n' +
+                    '\t\t\t\t\t\t\t\t<li class="yui3-u-1-8"><span class="price">'+cartList[i].courseVOList[j].price+'</span></li>\n' +
+                    '\t\t\t\t\t\t\t\n' +
+                    '\t\t\t\t\t\t\t\t<li class="yui3-u-1-8"><span class="sum">'+cartList[i].courseVOList[j].price+'</span></li>\n' +
+                    '\t\t\t\t\t\t\t\t<li class="yui3-u-1-8">\n' +
+                    '\t\t\t\t\t\t\t\t\t<a href="javascript:delteCart()">删除</a><br />\n' +
+                    '\t\t\t\t\t\t\t\t\t<a href="#none">移到我的关注</a>\n' +
+                    '\t\t\t\t\t\t\t\t</li>\n' +
+                    '\t\t\t\t\t\t\t</ul>\n' +
+                    '\t\t\t\t\t\t</div>\n' +
+                    '\n' +
+                    '\t\t\t\t\t</div>';
+				html += '</div>';
+
+			}
+
+			html +='</div>';
+			$("#cartList").html(html);
+			$(".summoney").text(price);
+		}
+
+
+	/*	function addCart(num, itemId) {
+			$.ajax({
+				url: "/cart/addCart",
+				dataType: "json",
+				type: "post",
+				data: {itemId: itemId, num: num},
+				async: false,
+				success: function (data) {
+
+				}
+			})
+			getCartList()
+		}*/
+
+		// function delteCart(itemId) {
+		// 	var scopeNum = parseInt($(".itxt").val());
+		// 	scopeNum = parseInt(scopeNum);
+		// 	var num = 0 - scopeNum;
+		// 	addCart(num, itemId)
+		// 	window.location.reload();
+		// }
+	}
+
+	// 生成订单跳转支付
+	function tradeInfo(){
+		$.ajax({
+			url : "/order/addOrderInfo",
+			type : "post",
+			dataType : "json",
+			data:{price:price},
+			async : false,
+			success : function (result){
+					let map = result.data;
+					// 获取地址
+				alert(map.out_trade_no);
+					location.href = "/alipay/toPayInfo?out_trade_no=" + map.out_trade_no +"&body=" + map.body + "&total_amount=" + map.total_amount + "&subject=" + map.subject + "&username=" + map.username;
+			},
+			error : function (){
+				alert("网络异常");
+			}
+		})
+	}
+</script>

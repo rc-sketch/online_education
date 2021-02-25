@@ -1,0 +1,17 @@
+server:
+  port: 10021 #为了和之前的区分，我们阿里巴巴的都是用9000段端口
+spring:
+  application:
+    name: education-teacher-web #设置微服务名称
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+      config:
+        server-addr: 127.0.0.1:8848 #Nacos作为配置中心地址
+        file-extension: yml #指定yml格式配置
+        group: DEV_GROUP #组
+  servlet:
+    multipart:
+      max-file-size: 10240000     # 最大上传单个文件大小：默认1Mxxx
+      max-request-size: 10240000  # 最大置总上传的数据大小 ：默认10M

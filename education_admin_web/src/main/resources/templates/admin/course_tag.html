@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- 页面meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>商品分类管理</title>
+    <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="../plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../plugins/adminLTE/css/AdminLTE.css">
+    <link rel="stylesheet" href="../plugins/adminLTE/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+	<script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
+    <script src="../plugins/bootstrap/js/bootstrap.min.js"></script>
+    
+</head>
+
+<body class="hold-transition skin-red sidebar-mini" >
+  <!-- .box-body -->
+                
+                    <div class="box-header with-border">
+                        <h3 class="box-title">商品分类管理     
+                       	</h3>
+                    </div>
+
+                    <div class="box-body">
+                  			 <!-- <ol class="breadcrumb">	                        	 -->
+                        		<!-- <li> -->
+		                        	<!-- <a href="#" >顶级分类列表</a>  -->
+		                        <!-- </li> -->
+		                        <!-- <li> -->
+		                       		<!-- <a href="#" >珠宝</a> -->
+		                        <!-- </li> -->
+		                        <!-- <li> -->
+		                        	<!-- <a href="#" >银饰</a> -->
+		                        <!-- </li> -->
+	                        <!-- </ol> -->
+
+                        <!-- 数据表格 -->
+                        <div class="table-box">
+							
+                            <!--工具栏-->
+                            <div class="pull-left">
+                                <div class="form-group form-inline">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-default" title="新建" data-toggle="modal" data-target="#editModal" ><i class="fa fa-file-o"></i> 新建</button>
+                                        <button type="button" class="btn btn-default" title="删除" onclick="deleteBath()"><i class="fa fa-trash-o"></i> 删除</button>
+                                        <button type="button" class="btn btn-default" title="刷新" onclick="window.location.reload()"><i class="fa fa-check"></i> 刷新</button>
+                                       
+                                    </div>
+                                </div>
+                            </div>                          
+                       		
+                        
+			                <!--数据列表-->
+			                  <table id="dataList" class="table table-bordered table-striped table-hover dataTable">
+			                      <thead>
+			                          <tr>
+			                              <th class="" style="padding-right:0px">
+			                                  <input type="checkbox" class="icheckbox_square-blue">
+			                              </th> 
+										  <th class="sorting_asc">课程标签ID</th>
+									      <th class="sorting">课程标签名称</th>									   					
+					                      <th class="text-center">操作</th>
+			                          </tr>
+			                      </thead>
+			                      <tbody>
+			                          <tr >
+			                              <td><input  type="checkbox" ></td>			                              
+				                          <td>1</td>
+									      <td>舞蹈课</td>									    
+									  								      
+		                                  <td class="text-center">		                                     
+		                                                                          
+		                                 	  <button type="button" class="btn bg-olive btn-xs" data-toggle="modal" data-target="#editModal" >修改</button>                                           
+		                                  </td>
+			                          </tr>
+
+			                      </tbody>
+			                  </table>
+			                  <!--数据列表/-->                      
+						
+                        </div>
+                        <!-- 数据表格 /-->
+                        
+                        
+                        
+                        
+                     </div>
+                    <!-- /.box-body -->
+              
+                                
+<!-- 编辑窗口 -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" >
+	<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			<h3 id="myModalLabel">课程标签编辑</h3>
+		</div>
+		<div class="modal-body">							
+			
+			<table class="table table-bordered table-striped"  width="800px">
+				<!-- <tr> -->
+		      		<!-- <td>上级商品分类</td> -->
+		      		<!-- <td> -->
+		      		   <!-- 珠宝 >>  银饰 -->
+		      		<!-- </td> -->
+		      	<!-- </tr> -->
+		      	<tr>
+		      		<td>课程标签名称</td>
+		      		<td><input  class="form-control" placeholder="课程标签名称" name="tag" id="tag">  </td>
+		      	</tr>			  
+		      	<tr>
+		      		<!-- <td>类型模板</td> -->
+		      		<!-- <td>	      		 -->
+		      			<!-- <input select2 config="options['type_template']" placeholder="商品类型模板" class="form-control" type="text"/> -->
+		      		<!-- </td>		      		      		 -->
+		      	<!-- </tr>		      	 -->
+			 </table>				
+			
+		</div>
+		<div class="modal-footer">						
+			<button class="btn btn-success" data-dismiss="modal" aria-hidden="true" onclick="addTags()">保存</button>
+			<button class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
+		</div>
+	  </div>
+	</div>
+</div>
+
+  <!-- 修改窗口 -->
+  <form id="updateForm">
+	  <div class="modal fade" id="editModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+		   aria-hidden="true">
+		  <div class="modal-dialog">
+			  <div class="modal-content">
+				  <div class="modal-header">
+					  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					  <h3 id="myModalLabel1">课程标签修改</h3>
+				  </div>
+				  <div class="modal-body">
+
+					  <table class="table table-bordered table-striped" width="800px">
+						  <!-- <tr> -->
+						  <!-- <td>上级商品分类</td> -->
+						  <!-- <td> -->
+						  <!-- 珠宝 >>  银饰 -->
+						  <!-- </td> -->
+						  <!-- </tr> -->
+						  <tr>
+							  <td>课程标签名称</td>
+							  <td><input class="form-control" placeholder="课程标签名称" name="tag" id="updateTag"></td>
+							  <td><input type="hidden" name="id" id="updateId"></td>
+						  </tr>
+						  <tr>
+							  <!-- <td>类型模板</td> -->
+							  <!-- <td>	      		 -->
+							  <!-- <input select2 config="options['type_template']" placeholder="商品类型模板" class="form-control" type="text"/> -->
+							  <!-- </td>		      		      		 -->
+							  <!-- </tr>		      	 -->
+					  </table>
+
+				  </div>
+				  <div class="modal-footer">
+					  <button class="btn btn-success" data-dismiss="modal" aria-hidden="true" onclick="updateTags()">
+						  保存
+					  </button>
+					  <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
+				  </div>
+			  </div>
+		  </div>
+	  </div>
+  </form>
+</body>
+</html>
+<script type="text/javascript">
+	$(function () {
+		getTags()
+	})
+	//查询所有标签
+	function getTags() {
+		$.ajax({
+			url: "/tagController/getTags",
+			type: "post",
+			dataType: "json",
+			async: false,
+			success: function (obj) {
+				var result = obj.data.data;
+				var concats = "";
+				if (obj.code == 200) {
+					concats +="<thead>\n" +
+							"\t\t\t                          <tr>\n" +
+							"\t\t\t                              <th class=\"\" style=\"padding-right:0px\">\n" +
+							"\t\t\t                                  <input type=\"checkbox\" class=\"icheckbox_square-blue\">\n" +
+							"\t\t\t                              </th> \n" +
+							"\t\t\t\t\t\t\t\t\t\t  <th class=\"sorting_asc\">课程标签ID</th>\n" +
+							"\t\t\t\t\t\t\t\t\t      <th class=\"sorting\">课程标签名称</th>\t\t\t\t\t\t\t\t\t   \t\t\t\t\t\n" +
+							"\t\t\t\t\t                      <th class=\"text-center\">操作</th>\n" +
+							"\t\t\t                          </tr>\n" +
+							"\t\t\t                      </thead>";
+					for (var i = 0; i < result.length; i++) {
+						concats += "<tbody>";
+						concats += "<tr>";
+						concats +='<td><input width="10px"  type="checkbox" name="box" value="'+result[i].id+'"></td>';
+						concats += "<td>"+result[i].id +"</td>";
+						concats += "<td>" + result[i].tag + "</td>";
+						concats += "<td class=\"text-center\">";
+						concats += "<button type=\"button\" class=\"btn bg-olive btn-xs\" data-toggle=\"modal\" data-target=\"#editModal1\" onclick=\'updateInfo("+result[i].id+")\' >修改</button>";
+						concats += "</td>";
+						concats += "</tr>";
+						concats += "</tbody>";
+					}
+				}
+				$("#dataList").html(concats);
+
+			},
+			error: function () {
+				alert("失败");
+			}
+		})
+	}
+	//增加标签
+	function addTags() {
+		$.ajax({
+			url: "/tagController/addTags",
+			type: "post",
+			dataType: "json",
+			data: {tag:$("#tag").val()},
+			async: true,
+			success: function (result) {
+				if(result.code == 200){
+					alert("增加成功");
+					location.reload();
+				}
+			},
+			error: function () {
+				alert("增加失败");
+			}
+
+		})
+	}
+	//批量删除
+	function deleteBath() {
+		if(confirm("确认删除吗")){
+			var ids=[];
+			$("[name=box]:checked").each(function (i,e){
+				ids.push($(e).val());
+			})
+			if(ids.length <= 0){
+				alert("请选择需要删除标签");
+				return ;
+			}
+			$.ajax({
+				url: "/tagController/deleteBatch/"+ids,
+				dataType: "json",
+				type: "delete",
+				async: true,
+				success: function (result) {
+					alert(result.message);
+					location.reload();
+				},
+				error: function (result) {
+					alert("系统异常,请联系管理员");
+				}
+			})
+		}
+	}
+	//条件查询(回显)
+	function updateInfo(id) {
+		$.ajax({
+			url: "/tagController/getInfoById/" + id,
+			dataType: "json",
+			type: "post",
+			success: function (result) {
+				var tag = result.data.data.tag;
+				var id = result.data.data.id;
+				$("#updateTag").val(tag);
+				$("#updateId").val(id);
+			},
+			error: function (result) {
+				alert("系统异常,请联系管理员");
+			}
+		})
+	}
+
+	//修改
+	function updateTags() {
+		var tags = $("#updateTag").val();
+		var ids = $("#updateId").val();
+		$.ajax({
+			url: "/tagController/updateTags",
+			dataType: "json",
+			type: "post",
+			data:{tag:tags,id:ids},
+			success: function (result) {
+				alert(result.message);
+				location.reload();
+			},
+			error: function (result) {
+				alert("系统异常,请联系管理员");
+			}
+		})
+	}
+</script>

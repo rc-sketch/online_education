@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>课程管理</title>
+    <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="../plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../plugins/adminLTE/css/AdminLTE.css">
+    <link rel="stylesheet" href="../plugins/adminLTE/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+	<script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
+    <script src="../plugins/bootstrap/js/bootstrap.min.js"></script>
+
+    
+</head>
+<body class="hold-transition skin-red sidebar-mini">
+  <!-- .box-body -->
+                    <div class="box-header with-border">
+                        <h3 class="box-title">课程管理</h3>
+                    </div>
+
+                    <div class="box-body">
+
+                        <!-- 数据表格 -->
+                        <div class="table-box">
+
+                            <!--工具栏-->
+                            <div class="pull-left">
+                                <div class="form-group form-inline">
+                                    <div class="btn-group">
+                                        <!-- <button type="button" class="btn btn-default" title="新建" data-toggle="modal" data-target="#editModal" ><i class="fa fa-file-o"></i> 新建</button> -->
+                                        <button type="button" class="btn btn-default" title="删除" onclick="deleteBath()"><i class="fa fa-trash-o"></i> 删除</button>
+                                        <button type="button" class="btn btn-default" title="刷新" onclick="window.location.reload();"><i class="fa fa-refresh"></i> 刷新</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="box-tools pull-right">
+                                <div class="has-feedback">
+							                                         
+                                </div>
+                            </div>
+                            <!--工具栏/-->
+
+			                  <!--数据列表-->
+			                  <table id="dataList" class="table table-bordered table-striped table-hover dataTable">
+			                      <thead>
+			                          <tr>
+			                              <th class="" style="padding-right:0px">
+			                                  <input id="selall" type="checkbox" class="icheckbox_square-blue">
+			                              </th> 
+										  <!-- id -->
+										  <th class="sorting_asc">课程ID</th>
+										  <!-- course_name -->
+									      <th class="sorting">课程名称</th>
+										  <!-- teacher_name									       -->
+									      <th class="sorting">所属讲师</th>
+											<!-- course_introduction -->
+									      <th class="sorting">课程简介</th>		
+										  <!-- category1_id   关联tab_item_cat -->
+									      <!--<th class="sorting">类型</th>	-->
+											<!-- image											   -->
+									      <th class="sorting">课程封面图片</th>		
+											<!-- create_time										   -->
+									      <th class="sorting">课程创建时间</th>
+											<!-- is_free 1免费2付费 -->
+									      <th class="sorting">是否免费</th>		
+											<!-- status 1-通过，2-未通过 -->
+									      <th class="sorting">课程审核状态</th>									     				
+									      <th class="sorting">课程审核</th>									     				
+					                      <th class="text-center">操作</th>
+			                          </tr>
+			                      </thead>
+			                      <tbody>
+			                          <tr>
+			                              <td><input  type="checkbox" ></td>			                              
+				                          <td>1</td>
+									      <td>Java工程师-零基础</td>									     
+		                                  <td>donhke</td>		                                 
+		                                  <td>从0到1，亲历2大企业级真实项目，锤炼职场综合能力</td>		                                 
+		                                  <td>后端开发</td>		                                 
+		                                  <td><img src="#"></td>		                                 
+		                                  <td>2021/12/1</td>		                                 
+		                                  <td>免费</td>		                                 
+		                                  <td>审核驳回</td>		
+											<td class="text-center">                                           
+		                                 	  <button type="button" class="btn bg-olive btn-xs"  >审核驳回</button>                                           
+		                                 	  <button type="button" class="btn bg-olive btn-xs"  >审核通过</button>                                           
+		                                  </td>										  
+		                                  <td class="text-center">                                           
+		                                 	  <a href="course_section.html" class="btn bg-olive btn-xs" target="iframe">课程章节</a>                                           
+		                                  </td>
+			                          </tr>
+
+			                      </tbody>
+			                  </table>
+			                  <!--数据列表/-->
+							<div th:insert="/admin/page.html"></div>
+							 
+                        </div>
+                        <!-- 数据表格 /-->
+                        
+                        
+                        
+                        
+                     </div>
+                    <!-- /.box-body -->
+         
+<!-- 编辑窗口 -->
+<!-- <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> -->
+ 
+ 
+								
+										  
+  <!-- <div class="modal-dialog" > -->
+	<!-- <div class="modal-content"> -->
+		<!-- <div class="modal-header"> -->
+			<!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> -->
+			<!-- <h3 id="myModalLabel">课程编辑</h3> -->
+		<!-- </div> -->
+		<!-- <div class="modal-body">		 -->
+			<!-- <table class="table table-bordered table-striped"  width="800px"> -->
+		      	<!-- <tr> -->
+		      		<!-- <td>课程名称</td> -->
+		      		<!-- <td><input  class="form-control" placeholder="课程名称" name="courseName" id="courseName">  </td> -->
+		      	<!-- </tr>		      	 -->
+		      	<!-- <tr> -->
+		      		<!-- <td>讲师</td> -->
+					
+		      		<!-- <td><input  class="form-control" placeholder="所属讲师" name="">  </td> -->
+		      	<!-- </tr>		      	 -->
+			 <!-- </table>				 -->
+		<!-- </div> -->
+		<!-- <div class="modal-footer">						 -->
+			<!-- <button class="btn btn-success" data-dismiss="modal" aria-hidden="true">保存</button> -->
+			<!-- <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button> -->
+		<!-- </div> -->
+	  <!-- </div> -->
+	<!-- </div> -->
+<!-- </div> -->
+     
+										  
+</body>
+</html>
+<script type="text/javascript">
+	$(function (){
+		getData();
+	})
+	function getData() {
+		$.ajax({
+			url: "/courseController/getCourseList",
+			type: "get",
+			dataType: "json",
+			data: {
+				pageNumber:$("[name=pageNumber]").val(),
+				pageSize:$("[name=pageSize]").val(),
+			},
+			success: function (obj) {
+				//console.log(obj)
+				var result = obj.data.data.result;
+
+				//console.log(result)
+				var concats = "";
+				if (obj.code == 200) {
+
+					concats +="<thead>\n" +
+							"\t\t\t                          <tr>\n" +
+							"\t\t\t                              <th class=\"\" style=\"padding-right:0px\">\n" +
+							"\t\t\t                                  <input id=\"selall\" type=\"checkbox\" class=\"icheckbox_square-blue\">\n" +
+							"\t\t\t                              </th> \n" +
+							"\t\t\t\t\t\t\t\t\t\t  <!-- id -->\n" +
+							"\t\t\t\t\t\t\t\t\t\t  <th class=\"sorting_asc\">课程ID</th>\n" +
+							"\t\t\t\t\t\t\t\t\t\t  <!-- course_name -->\n" +
+							"\t\t\t\t\t\t\t\t\t      <th class=\"sorting\">课程名称</th>\n" +
+							"\t\t\t\t\t\t\t\t\t\t  <!-- teacher_name\t\t\t\t\t\t\t\t\t       -->\n" +
+							"\t\t\t\t\t\t\t\t\t      <th class=\"sorting\">所属讲师</th>\n" +
+							"\t\t\t\t\t\t\t\t\t\t\t<!-- course_introduction -->\n" +
+							"\t\t\t\t\t\t\t\t\t      <th class=\"sorting\">课程简介</th>\t\t\n" +
+							"\t\t\t\t\t\t\t\t\t\t  <!-- category1_id   关联tab_item_cat -->\n" +
+							"\t\t\t\t\t\t\t\t\t\t\t<!-- image\t\t\t\t\t\t\t\t\t\t\t   -->\n" +
+							"\t\t\t\t\t\t\t\t\t      <th class=\"sorting\">课程封面图片</th>\t\t\n" +
+							"\t\t\t\t\t\t\t\t\t\t\t<!-- create_time\t\t\t\t\t\t\t\t\t\t   -->\n" +
+							"\t\t\t\t\t\t\t\t\t      <th class=\"sorting\">课程创建时间</th>\n" +
+							"\t\t\t\t\t\t\t\t\t\t\t<!-- is_free 1免费2付费 -->\n" +
+							"\t\t\t\t\t\t\t\t\t      <th class=\"sorting\">是否免费</th>\t\t\n" +
+							"\t\t\t\t\t\t\t\t\t\t\t<!-- status 1-通过，2-未通过 -->\n" +
+							"\t\t\t\t\t\t\t\t\t      <th class=\"sorting\">课程审核状态</th>\t\t\t\t\t\t\t\t\t     \t\t\t\t\n" +
+							"\t\t\t\t\t\t\t\t\t      <th class=\"sorting\">课程审核</th>\t\t\t\t\t\t\t\t\t     \t\t\t\t\n" +
+							"\t\t\t\t\t                      <th class=\"text-center\">操作</th>\n" +
+							"\t\t\t                          </tr>\n" +
+							"\t\t\t                      </thead>";
+					for (var i = 0; i < result.length; i++) {
+						concats += "<tbody>";
+						concats += "<tr>";
+						concats +='<td><input width="10px"  type="checkbox" name="box" value="'+result[i].id+'"></td>';
+						concats += "<td>" + result[i].id + "</td>";
+						concats += "<td>" + result[i].courseName + "</td>";
+						concats += "<td>" + result[i].teacherName + "</td>";
+						concats += "<td>" + result[i].courseIntroduction + "</td>";
+
+						concats += "<td> <img src='"+result[i].image+"' style='width: 160px;height: 80px'></td>";
+						concats += "<td>" + result[i].createTime + "</td>";
+						concats += "<td>";
+						if([result[i].isFree]==1){
+							concats += "免费";
+						}
+						else if([result[i].isFree]==2){
+							concats += "付费";
+						}
+						concats += "</td>";
+						concats += "<td>";
+						if([result[i].status]==0){
+							concats += "待审核";
+						}
+						else if([result[i].status]==1){
+							concats += "审核通过";
+						}
+						else if([result[i].status]==2){
+							concats += "审核不通过";
+						}
+						else if([result[i].status]==3){
+							concats += "关闭账户";
+						}
+						concats += "</td>";
+						concats += "<td>"
+						concats += "<button type=\"button\" class=\"btn bg-olive btn-xs\"  onclick=\'updateStatus(2)\'>审核驳回</button>";
+						concats += "<button type=\"button\" class=\"btn bg-olive btn-xs\"  onclick=\'updateStatus(1)\'>审核通过</button>";
+						concats += "</td>";
+						concats += "<td class=\"text-center\">";
+						concats += "<a href='/course_section' class=\"btn bg-olive btn-xs\" target=\"iframe\">课程章节</a>";
+						concats += "</td>";
+						concats += "</tr>";
+						concats += "</tbody>";
+					}
+				}
+				buildPage(obj.data.data);
+				$("#dataList").html(concats);
+
+			},
+			error: function () {
+				alert("失败");
+			}
+		})
+	}
+	//批量删除
+	function deleteBath() {
+		if(confirm("确认删除吗")){
+			var ids=[];
+			$("[name=box]:checked").each(function (i,e){
+				ids.push($(e).val());
+			})
+			if(ids.length <= 0){
+				alert("请选择需要删除课程");
+				return ;
+			}
+			$.ajax({
+				url: "/courseController/deleteBath/"+ids,
+				dataType: "json",
+				type: "delete",
+				async: true,
+				success: function (result) {
+					alert(result.message);
+					location.reload();
+				},
+				error: function (result) {
+					alert("系统异常,请联系管理员");
+				}
+			})
+		}
+	}
+	//审核
+	function updateStatus(status){
+		var ids=[];
+		$("[name=box]:checked").each(function (i,e){
+			ids.push($(e).val());
+		})
+		if(ids.length <= 0){
+			alert("请选择要审核的课程");
+			return ;
+		}
+		$.ajax({
+			url:"/courseController/updateStatus/"+ids,
+			dataType:"json",
+			type:"put",
+			data:{status:status},
+			async:true,
+			success:function (result){
+				if (result.code==200){
+					alert("操作成功");
+					getData()
+				}
+
+			},
+			error:function (result){
+				alert("网络错误");
+			}
+		})
+	}
+
+</script>

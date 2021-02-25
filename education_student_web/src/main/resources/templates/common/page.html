@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:fragment="pageInclude">
+    <script>
+        function toPage(obj){
+            var pageNumber = parseInt($("#pageNumber").val());
+            var lastPage = parseInt($("#totalPages").val());
+
+            if (obj==1){
+                if (pageNumber <= 1){
+                    alert("已是首页");
+                    return ;
+                }
+                $("#pageNumber").val(pageNumber - 1);     //上一页
+            }
+            if (obj==2){
+                if (pageNumber >= lastPage){
+                    alert("已是末页");
+                    return ;
+                }
+                $("#pageNumber").val(pageNumber + 1);    //下一页
+            }
+            if (obj==3){
+                if (pageNumber <= 1){
+                    alert("已是首页");
+                    return ;
+                }
+                $("#pageNumber").val(1)  //首页
+            }
+            if (obj==4){
+                if (pageNumber >= lastPage){
+                    alert("已是末页");
+                    return ;
+                }
+                $("#pageNumber").val(lastPage)  //末页
+            }
+            showSpecification();
+        }
+        // page.getPageNum();//当前页数
+        // page.getList();//结果集
+        // page.getPageSize();//每页条数
+        // page.getTotal();//总条数
+        // page.getPages();//总页数
+
+
+        function pageLL(obj){
+            $("#pageNumber").val(obj.pageNumber);
+            $("#pageSize").val(obj.pageSize);
+            $("#totalPages").val(obj.totalPage);
+            $("#totalCount").val(obj.totalCount);
+        }
+    </script>
+
+
+    <form id="pageForm">
+        第<input type="text" id="pageNumber" name="pageNumber" size="2">页
+        每页<input type="text" id="pageSize" name="pageSize" size="2">条
+        共<input type="text" id="totalPages" name="totalPage" size="2" readonly>页
+        共<input type="text" id="totalCount" name="totalCount" size="2" readonly>条
+        <a href="javascript:toPage(1)">pre</a>
+        <a href="javascript:toPage(2)">next</a>
+        <a href="javascript:toPage(3)">first</a>
+        <a href="javascript:toPage(4)">last</a>
+
+    </form>
+</div>
+</body>
+</html>

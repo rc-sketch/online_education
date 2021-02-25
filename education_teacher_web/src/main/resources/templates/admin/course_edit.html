@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- 页面meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>课程编辑</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+
+    <link rel="stylesheet" href="../plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../plugins/adminLTE/css/AdminLTE.css">
+    <link rel="stylesheet" href="../plugins/adminLTE/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+<!--	<script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>-->
+<!--    <script src="../plugins/bootstrap/js/bootstrap.min.js"></script>-->
+    
+    <!-- 富文本编辑器 -->
+	<link rel="stylesheet" href="../plugins/kindeditor/themes/default/default.css" />
+	<script charset="utf-8" src="../plugins/kindeditor/kindeditor-min.js"></script>
+	<script charset="utf-8" src="../plugins/kindeditor/lang/zh_CN.js"></script>
+
+
+	<script src="/js/jquery-2.1.1.min.js"></script>
+	<!--    bootstrap-->
+	<script type="text/javascript" src="/js/bootstrap/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="/js/bootstrap/css/bootstrap.min.css"/>
+	<!--bootstrap-dialog-->
+	<script type="text/javascript" src="/js/bootstrap-dialog/dist/js/bootstrap-dialog.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="/js/bootstrap-dialog/dist/css/bootstrap-dialog.css"/>
+
+	<!--bootstrap-treeview-->
+	<script type="text/javascript" src="/js/bootstrap-treeview/dist/bootstrap-treeview.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="/js/bootstrap-treeview/dist/bootstrap-treeview.min.css"/>
+	<!-- ztree-->
+	<link rel="stylesheet" type="text/css" href="/js/zTreev3/css/zTreeStyle/zTreeStyle.css"/>
+	<script type="text/javascript" src="/js/zTreev3/js/jquery.ztree.all.js"></script>
+	<!--bootstrap-toastr-->
+	<script type="text/javascript" src="/js/toastr/toastr.min.js"></script>
+	<link rel="stylesheet" type="text/css" src="js/toastr/toastr.css"/>
+	<!--bootstrap-fileInput-->
+	<link rel="stylesheet" type="text/css" href="/js/bootstrap-fileinput/css/fileinput.css"/>
+	<script type="text/javascript" src="/js/bootstrap-fileinput/js/fileinput.js"></script>
+	<script type="text/javascript" src="/js/bootstrap-fileinput/js/locales/zh.js"></script>
+    
+</head>
+
+<body class="hold-transition skin-red sidebar-mini" >
+
+            <!-- 正文区域 -->
+            <section class="content">
+
+                <div class="box-body">
+
+                    <!--tab页-->
+                    <div class="nav-tabs-custom">
+
+                        <!--tab头-->
+                        <ul class="nav nav-tabs">                       		
+                            <li class="active">
+                                <a href="#home" data-toggle="tab">课程基本信息</a>                                                        
+                            </li>   
+                            <li >
+                                <a href="#pic_upload" data-toggle="tab">课程图片</a>                                                        
+                            </li>    
+                            <li >
+                                <a href="#customAttribute" data-toggle="tab">课程章节</a>                                                        
+                            </li>     
+<!--                                -->
+<!--							<li >-->
+<!--                                <a href="#spec" data-toggle="tab" >课程视频</a>                                                        -->
+<!--                            </li>    	-->
+                        </ul>
+                        <!--tab头/-->
+						
+                        <!--tab内容-->
+                        <div class="tab-content">
+
+                            <!--表单内容-->
+                            <div class="tab-pane active" id="home">
+                                <div class="row data-type">                                  
+								   <div class="col-md-2 title">课程分类</div>
+		                          
+		                           	  <div class="col-md-10 data">
+		                           	  	<table>
+		                           	  		<tr>
+												<td>
+													<select class="form-control" id="one" onchange="getItemCat1(this.value)">
+													</select>
+												</td>
+												<td>
+													<select class="form-control select-sm" id="two" onchange="getItemCat2(this)"></select>
+												</td>
+		                              			
+		                           	  		</tr>
+		                           	  	</table>
+		                              	
+		                              </div>	                              
+		                          	  
+									
+<!--		                           <div class="col-md-2 title">教师名称</div>-->
+<!--		                           <div class="col-md-10 data">-->
+		                               <input type="hidden" class="form-control"  id="teacherName"  placeholder="教师名称" value="">
+<!--		                           </div>-->
+		                           
+		                           <div class="col-md-2 title">课程名称</div>
+		                           <div class="col-md-10 data">
+		                              <input type="text" id="courseName" class="form-control"    placeholder="课程名称" value="">
+		                           </div>
+		
+								   <div class="col-md-2 title">副标题</div>
+		                           <div class="col-md-10 data">
+		                               <input type="text" class="form-control"  id="caption" placeholder="副标题" value="">
+		                           </div>
+		                           
+		                           <div class="col-md-2 title">价格</div>
+		                           <div class="col-md-10 data">
+		                           	   <div class="input-group">
+			                          	   <span class="input-group-addon">¥</span>
+			                               <input type="text" class="form-control" id="price" placeholder="价格" value="">
+		                           	   </div>
+		                           </div>
+		                           
+		                           <div class="col-md-2 title editer">课程简介</div>
+                                   <div class="col-md-10 data editer">
+                                       <textarea name="content" id="courseIntroduction" style="width:800px;height:400px;visibility:hidden;" ></textarea>
+                                   </div>
+		                           
+		                           <div class="col-md-2 title rowHeight2x">课程卖点</div>
+		                           <div class="col-md-10 data rowHeight2x">
+		                               
+		                           	<textarea rows="4"  class="form-control" id="sellPoint"  placeholder="课程卖点"></textarea>
+		                           </div>
+		                           
+		                           <div class="col-md-2 title rowHeight2x">是否免费</div>
+									<div class="col-md-10 data rowHeight2x">
+										<input type="radio" value="1" name="isFree">免费&nbsp;&nbsp;&nbsp;
+										<input type="radio" value="2" name="isFree">付费
+									</div>                      
+                                  
+                                    
+                                </div>
+                            </div>
+                            
+                            <!--图片上传-->
+                            <div class="tab-pane" id="pic_upload">
+                                <div class="row data-type">                                  
+								 <!-- 颜色图片 -->
+								 <div class="btn-group">
+					                 <button type="button" class="btn btn-default" title="新建" data-target="#uploadModal"  data-toggle="modal"  ><i class="fa fa-file-o"></i> 新建</button>
+                             		                 
+					             </div>
+								 
+								 <table class="table table-bordered table-striped table-hover dataTable">
+									 <thead>
+									 <tr>
+
+										 <th class="sorting">颜色</th>
+										 <th class="sorting">图片</th>
+										 <th class="sorting">操作</th>
+									 </thead>
+									 <tbody id="tbodyImgs">
+									 </tbody>
+								 </table> 
+								  
+                                </div>
+                            </div>
+                           
+                           
+                            <!--课程章节-->
+                            <div class="tab-pane" id="customAttribute">
+								<!-- 上传课程视频 -->
+                            	<div class="btn-group">
+					                 <button type="button" class="btn btn-primary" title="上传课程视频" data-target="#vodieModal"  data-toggle="modal"  ><i class="fa fa-file-o"></i> 上传课程视频</button>
+
+					             </div><br>
+								<hr>
+								<button class="btn btn-success"  data-dismiss="modal" aria-hidden="true" onclick="addNodes()">增加可章节</button>
+                            </div>
+							  <!--课程视频-->
+                            <div class="tab-pane" id="spec">
+
+
+                            </div>
+                        </div>
+					
+                        <!--tab内容/-->
+						<!--表单内容/-->
+							 
+                    </div>
+                   </div>
+                  <div class="btn-toolbar list-toolbar">
+				      <button class="btn btn-primary" onclick="insertGoods()"><i class="fa fa-save"></i>保存</button>
+				      <button class="btn btn-default" >返回列表</button>
+				  </div>
+			
+            </section>
+
+			<!-- 上传视频 -->
+			<div class="modal fade" id="vodieModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabe1l" aria-hidden="true">
+				<div class="modal-dialog" >
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+							<h3 id="myModalLabel1">上传课程视频</h3>
+						</div>
+						<div class="modal-body">
+
+							<table class="table table-bordered table-striped">
+								<form id="addvideoForm" method="post" enctype="multipart/form-data">
+									<tr>
+										<td>课程视频</td>
+										<td>
+
+											<table>
+												<tr>
+													<td>
+														<input type="file" name="myFile" id="myFile" multiple/>
+													</td>
+													<td>
+														<input type="text" name="url" id="bigpic"><br>
+													</td>
+												</tr>
+											</table>
+
+										</td>
+									</tr>
+								</form>
+							</table>
+						</div>
+
+
+						<div class="modal-footer">
+							<button class="btn btn-success"  data-dismiss="modal" onclick="saveImg()" aria-hidden="true">保存</button>
+							<button class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
+						</div>
+						<script>
+
+							var countImg = 0;
+							function saveImg(){
+								countImg++;
+								var table=document.getElementById("imgMult");
+								var tr=document.createElement("tr");
+								tr.innerHTML='<td><span id="co'+(countImg)+'"   name="coloreds"></span></td><td>< img alt="" src=""  id="im'+(countImg)+'" name="img"  width="100px" height="100px" ></td>'
+										+ '<td> <button type="button" class="btn btn-default" onclick="deletePic(this)" title="删除" ><i class="fa fa-trash-o"></i> 删除</button></td>';
+								table.appendChild(tr);
+
+								$("#co" + countImg).html($("#colora").val());
+								$("#im" + countImg).attr('src',$("#bigpic").val());
+
+							}
+						</script>
+					</div>
+				</div>
+
+
+			</div>
+
+			<!-- 上传窗口 -->
+			<div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog" >
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+							<h3 id="myModalLabel">上传商品图片</h3>
+						</div>
+						<div class="modal-body">
+
+							<form>
+								<table class="table table-bordered table-striped">
+									<tr>
+										<td>颜色</td>
+										<td><input  class="form-control" placeholder="颜色" id="color">  </td>
+									</tr>
+									<tr>
+										<td>商品图片</td>
+										<td>
+											<table>
+												<tr>
+													<td>
+														<label for="uimg">上传图片</label>
+														<input type="file" class="form-control" name="myFile" id="uimg">
+														<input type="text" name="image" id="bimages">
+													</td>
+													<!--								<td>-->
+													<!--									<img  src="" width="200px" height="200px">-->
+													<!--								</td>-->
+												</tr>
+											</table>
+										</td>
+									</tr>
+								</table>
+							</form>
+						</div>
+						<div class="modal-footer">
+							<button class="btn btn-success"  data-dismiss="modal" aria-hidden="true" onclick="addImg()">保存</button>
+							<button class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
+						</div>
+					</div>
+				</div>
+			</div>
+<!--  -->
+
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<script>
+
+		function addNodes() {
+			BootstrapDialog.show({
+				title: "增加",
+				message: $("<div></div>").load("/toAdd"),
+				type: BootstrapDialog.TYPE_PRIMARY,
+				size: BootstrapDialog.SIZE_WIDE,
+				buttons: [{
+					label: "增加",
+					cssClass: 'btn-info',
+					action: function (dialog) {
+						$.ajax({
+							url: "/courseSection/insertCourseSection",
+							type: "post",
+							dataType: "json",
+							// data:{text:$("#nodeNames").val(),text:$("#nodeText").val(),url:$("#nodeUrl").val()},
+							data: $("#addForm").serialize(),
+							success: function (result) {
+								console.log(result.data)
+								toastr.success("增加成功");
+								dialog.close();
+								addNodes1(id)
+								location=location;
+							},
+							error: function () {
+								alert("系统异常,请稍后再试");
+							}
+						});
+					}
+				}, {
+					label: "关闭",
+					// cssClass:'btn-default',
+					action: function (dialog) {
+						dialog.close();
+					}
+				}]
+			})
+		}
+			// //增加目录
+			// function addNodes1() {
+			// BootstrapDialog.show({
+			// 	title:"增加",
+			// 	message:$("<div></div>").load("/toAdd"),
+			// 	type:BootstrapDialog.TYPE_PRIMARY,
+			// 	size:BootstrapDialog.SIZE_WIDE,
+			// 	buttons:[{
+			// 		label:"增加",
+			// 		cssClass:'btn-info',
+			// 		action:function(dialog) {
+			// 			$.ajax({
+			// 				url:"/courseSection/insertCourseSection",
+			// 				type:"post",
+			// 				dataType:"json",
+			// 				data:{text:$("#nodeUrl").val(),url:videoUrl},
+			// 				// data:$("#addForm").serialize() + "&parentid=" + id,
+			// 				success:function(data) {
+			// 					toastr.success("增加成功");
+			// 					dialog.close();
+			// 					$.fn.zTree.init($("#treeDemo"), setting);
+			// 				},
+			// 				error:function () {
+			// 					alert("系统异常,请稍后再试");
+			// 				}
+			// 			});
+			// 		}
+			// 	}, {
+			// 		label:"关闭",
+			// 		// cssClass:'btn-default',
+			// 		action:function (dialog) {
+			// 			dialog.close();
+			// 		}
+			// 	}]
+			// })
+		// }
+		//修改
+		function editNodes(id) {
+			BootstrapDialog.show({
+				title: "修改",
+				message:$("<div></div>").load("/menu/updateById/"+ id),
+				type:BootstrapDialog.TYPE_PRIMARY,
+				size:BootstrapDialog.SIZE_WIDE,
+				buttons:[{
+					label:"增加",
+					cssClass:'btn-info',
+					action:function(dialog) {
+						$.ajax({
+							url:"/menu/updateMenu",
+							type:"post",
+							dataType:"json",
+							data:$("#updateForm").serialize(),
+							// data:{text:$("#nodeNames").val(),url:$("#nodeUrl").val(),id:$("#id").val()},
+							success:function(data) {
+								toastr.success("修改成功");
+								dialog.close();
+								$.fn.zTree.init($("#treeDemo"), setting);
+							},
+							error:function () {
+								alert("系统异常,请稍后再试");
+							}
+						});
+					}
+				}, {
+					label:"关闭",
+					// cssClass:'btn-default',
+					action:function (dialog) {
+						dialog.close();
+					}
+				}]
+			})
+		}
+		//删除
+		function deleteNodes(id) {
+			var flag = window.confirm("确定要删除"+ id +"行吗?");
+			if (flag){
+				$.ajax({
+					url:"/menu/deleteById/" + id,
+					type:"post",
+					dataType:"json",
+					success:function(data) {
+						toastr.success("删除成功");
+						$.fn.zTree.init($("#treeDemo"), setting);
+					},
+					error:function () {
+						alert("系统异常,请稍后再试");
+					}
+				});
+			}
+		}
+	</script>
+
+
+</div>
+            
+            <!-- 正文区域 /-->
+<script type="text/javascript">
+
+	var editor;
+	KindEditor.ready(function(K) {
+		editor = K.create('textarea[name="content"]', {
+			allowFileManager : true
+		});
+	});
+
+</script>
+      
+</body>
+<script>
+	$(function () {
+		getItemCatAll(0);
+		fileInit()
+	})
+	//查询一级分类
+	function getItemCatAll(parentId) {
+		$.ajax({
+			url:"/itemCatController/findItemCatByParentId/" + parentId,
+			type:"post",
+			dataType:"json",
+			success:function (result) {
+				if (result.code == 200){
+					var itemcat1 = result.data;
+					var options = '<option value="-1">请选择</option>';
+					$(itemcat1).each(function (index,e) {
+						options += '<option value="'+ e.id +'">'+ e.name +'</option>';
+					})
+					$("#one").html(options);
+
+				}else {
+					toastr.error(result.message);
+				}
+			},
+			error:function () {
+				toastr.error("查询一级分类异常");
+			}
+		});
+	}
+	//查询二级分类
+	function getItemCat1(parentId) {
+		$.ajax({
+			url:"/itemCatController/findItemCatByParentId/" + parentId,
+			type:"post",
+			dataType:"json",
+			success:function (result) {
+				if (result.code == 200){
+					var itemcat1 = result.data;
+					var options = '<option value="-1">请选择</option>';
+					$(itemcat1).each(function (index,e) {
+						options += '<option value="'+ e.id +'">'+ e.name +'</option>';
+					})
+					$("#two").html(options);
+				}else {
+					toastr.error(result.message);
+				}
+			},
+			error:function () {
+				toastr.error("查询一级分类异常");
+			}
+		});
+	}//查询二级分类
+	function getItemCat2(parentId) {
+		$.ajax({
+			url:"/itemCatController/findItemCatByParentId/" + parentId,
+			type:"post",
+			dataType:"json",
+			success:function (result) {
+				if (result.code == 200){
+					var itemcat1 = result.data;
+					var options = '<option value="-1">请选择</option>';
+					$(itemcat1).each(function (index,e) {
+						options += '<option value="'+ e.id +'">'+ e.name +'</option>';
+					})
+					$("#one").html(options);
+				}else {
+					toastr.error(result.message);
+				}
+			},
+			error:function () {
+				toastr.error("查询一级分类异常");
+			}
+		});
+	}
+	//增加商品
+	function insertGoods() {
+		//获取一级分类
+		var c1 = $("#one").find("option:selected");
+		var category1Id = $(c1).val();
+		//获取二级分类
+		var c2 = $("#two").find("option:selected");
+		var category2Id = $(c2).val();
+		//获取教师名称
+		var teacherName = $("#teacherName").val();
+		//获取课程名称
+		var courseName = $("#courseName").val();
+		//获取副标题
+		var caption = $("#caption").val();
+		//获取价格
+		var price = $("#price").val();
+		//获取富文本编辑器的值
+		editor.sync();
+		var courseIntroduction = $("#courseIntroduction").val();
+		//获取是否免费
+		var isFree = $("[name=isFree]").val();
+		//增加图片
+		//定义数组
+		var goodsImageList = [];
+		$("#tbodyImgs").find("tr").each(function () {
+			var tds = $(this).children();
+			var color = tds.eq(0).text();
+			var bimage = tds.eq(1).find("img").attr("src");
+			var image = {"color":color,"url":bimage};
+			goodsImageList.push(image);
+		});
+		var itemImages = JSON.stringify(goodsImageList);
+		console.log(itemImages);
+		$.ajax({
+			url:"/courseController/insertCourseList",
+			type:"post",
+			data:{
+				category1Id:category1Id,
+				category2Id:category2Id,
+				teacherName:teacherName,
+				courseName:courseName,
+				caption:caption,
+				price:price,
+				courseIntroduction:courseIntroduction,
+				image:itemImages,
+				isFree:isFree
+			},
+			dataType:"json",
+			success:function (result) {
+				if (result.code == 200){
+					toastr.success(result.message);
+					window.location.href = window.location.href;
+				}else {
+					toastr.error(result.message);
+				}
+			},
+			error:function () {
+				toastr.error("增加失败");
+			}
+		})
+	}
+	//图片上传
+	function fileInit() {
+		$('#uimg').fileinput({
+			language: 'zh',
+			uploadUrl: '/courseController/upLoadFile',
+			maxFileCount: 3, // 最多同时传送几个图片，需要加multiple注解
+			enctype: 'multipart/form-data',
+			maxFileSize: 1024000, // 单位为kb
+			allowedFileExtensions: ['jpg','gif','png','jpeg','jfif'],
+			browseClass: 'btn btn-primary',
+			initialPreviewAsData: true, // 是否初始化预览图片
+			initialPreviewFileType: 'image', //回显文件的类型(初始化预览图片类型)
+			initialPreview: $("#bimages").val(), //图片地址
+		});
+		$('#uimg').on('fileuploaded', function (event, data, previewId, index) {
+			if (data.response) { // 如果有返回值 那么就最终结果就是true
+				//   var imgUrl = data.response.imgUrl;//原先上传图片
+				var imgUrl = data.response.data; // 阿里云上传 setData(url)在后段方法里把url设置给了data，所以想拿到url就得.data
+				$("#bimages").val(imgUrl);
+			}
+		})
+	}
+	//增加 图片
+	function addImg() {
+		var color=$("#color").val();
+		var url=$("#bimages").val();
+		var img='';
+		img +='<tr>';
+		img +='<td>'+color+'</td>';
+		img +='<td>';
+		img +='<img src="'+url+'" width="100px" height="100px">';
+		img +='</td>';
+		img +='<td> <button type="button" class="btn btn-default" title="删除" onclick="deleteImg(this)"><i class="fa fa-trash-o"></i> 删除</button></td> ';
+		img += '</tr>';
+		$("#tbodyImgs").append(img);
+	}
+	//删除
+	function deleteImg(obj) {
+		if (confirm("去顶要删除吗?")){
+			var tr = obj.parentNode.parentNode;
+			tr.parentNode.removeChild(tr);
+		}
+	}
+
+var videoUrl = "";
+	//上传视频
+	$(function (){
+
+		$('#myFile').fileinput({
+			language: 'zh',//汉化
+			uploadUrl: "/courseController/upLoadFile",//定义上传地址
+			showCaption: true,//默认true，设置为false时将不显示下面那个类似于input[type=text]那样的显示框（然而这个显示框并不能直接编辑，它只是显示了文件名等信息）
+			showUpload: true,//默认true，设置为false是不显示右下角那个上传按钮
+			showRemove: true,//默认为true，设置为false时不显示右下角移除按钮
+			showClose: true,//默认为true，设置为false时不显示右上角的小叉（这个叉的作用就是移除当前所有文件区中的文件）
+			browseClass:'btn btn-primary',
+			allowedFileExtensions:['jpg','png','gif','mp4'],//一个数组，指出带有哪些后缀名的文件才是被接受上传的，设置msgInvalidFileExtension可以个性化出现此错误时的错误信息
+			maxFileSize:10240000,     //指出上传支持的最小最大的文件大小，同时可以设置msgFileTooSmall和msgFileTooLarge个性化报错信息
+			maxFileCount :2,   //指出上传最少多几个文件，若设置成0则表示没有限制。默认是0
+			enctype:"multipart/form-data",//设置文件上传的方式
+			layoutTemplates:{
+				actionDelete: ''
+			},
+			browseClass: 'btn btn-primary'
+		});
+		//上传成功回调,根据后台成功上传后调用这个方法，data里面的数据有一个response的imgUrl是后台返回的一个数据，我是以map进行返回的，
+		$("#myFile").on('fileuploaded',function (event,data,previewId,index){
+			if(data.response != null){
+				videoUrl = $("[name=url]").val(data.response.data);
+			}
+		})
+	})
+
+</script>
+</html>

@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <!-- 页面meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>讲师审核</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="../plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../plugins/adminLTE/css/AdminLTE.css">
+    <link rel="stylesheet" href="../plugins/adminLTE/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+	<script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
+    <script src="../plugins/bootstrap/js/bootstrap.min.js"></script>
+    
+</head>
+
+<body class="hold-transition skin-red sidebar-mini"  >
+  <!-- .box-body -->
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">讲师审核</h3>
+						<!-- tab_teacher -->
+                    </div>
+
+                    <div class="box-body">
+
+                        <!-- 数据表格 -->
+                        <div class="table-box">
+
+                            <!--工具栏-->
+                            
+                            <div class="box-tools pull-right">
+                                <div class="has-feedback">
+							        讲师名称：<input id="name" name="name" >
+									讲师等级： <select name="levelName">
+													<option value="">请选择</option>
+													<option value="1">教授</option>
+													<option value="2">副教授</option>
+													<option value="3">金牌教师</option>
+												</select>
+									<input class="btn btn-default" onclick="getData()" value="查询"/>
+                                </div>
+                            </div>
+                            <!--工具栏/-->
+
+			                  <!--数据列表-->
+			                  <table id="dataList" class="table table-bordered table-striped table-hover dataTable">
+			                   <!--   <thead>
+			                          <tr>
+			                              <th class="" style="padding-right:0px">
+			                                  <input id="selall" type="checkbox" class="icheckbox_square-blue">
+			                              </th> 
+										  <th class="sorting_asc">讲师ID</th>
+										  &lt;!&ndash; teacher_id &ndash;&gt;
+									      <th class="sorting">讲师名称</th>
+										  &lt;!&ndash; name &ndash;&gt;
+									      <th class="sorting">讲师等级</th>
+										  
+									      <th class="sorting">审核状态</th>
+										  &lt;!&ndash; status 0.待审核    1.审核通过   2.审核不通过   -1.删除账户 &ndash;&gt;
+					                      &lt;!&ndash; <th class="text-center">审核</th> &ndash;&gt;
+					                      <th class="text-center">操作</th>
+			                          </tr>
+			                      </thead>-->
+			                  <!--    <tbody>
+			                          <tr>
+			                              <td><input  type="checkbox"></td>			                              
+				                          <td>1</td>
+									      <td>高杰</td>
+									      <td>教授</td>
+									    
+									      <td>待审核</td>
+									  
+		                                  <td class="text-center">                                           
+		                                 	  <button type="button" class="btn bg-olive btn-xs" data-toggle="modal" data-target="#sellerModal" >详情</button>                                           
+		                                  </td>
+			                          </tr>
+
+			                      </tbody>-->
+			                  </table>
+			                  <!--数据列表/-->
+							<div th:insert="/admin/page.html"></div>
+							 
+                        </div>
+                        <!-- 数据表格 /-->
+                        
+                        
+                        
+                        
+                     </div>
+                    <!-- /.box-body -->
+				</div>
+                    
+	          
+					    
+                                
+<!-- 商家详情 -->
+<div class="modal fade" id="sellerModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" >
+	<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			<h3 id="myModalLabel">讲师详情</h3>
+		</div>
+		<div class="modal-body">							
+			
+			 <ul class="nav nav-tabs">
+			  <li class="active"><a href="#home" data-toggle="tab">基本信息</a></li>
+			  <!-- <li><a href="#linkman" data-toggle="tab">联系人</a></li> -->
+			  <!-- <li><a href="#certificate" data-toggle="tab">证件</a></li> -->
+			  <!-- <li><a href="#ceo" data-toggle="tab">法定代表人</a></li> -->
+			  <!-- <li><a href="#bank" data-toggle="tab">开户行</a></li> -->
+			</ul>							
+			
+			<!-- 选项卡开始 -->         
+		    <div id="myTabContent" class="tab-content">
+			    <div class="tab-pane active in" id="home">
+			      <br>
+			      <table id="dail_Id" class="table table-bordered table-striped"  width="800px">
+									      <td>男</td>
+									      <td>22</td>
+			      	<tr>
+			      		<td>邮箱</td>
+			      		<td>1940579742@.com</td>
+			      	</tr>
+			      	<tr>
+			      		<td>公司手机</td>
+			      		<td>13900221212</td>
+			      	</tr>
+			    
+			      	<tr>
+			      		<td>性别</td>
+			      		<td>男</td>
+			      	</tr>
+						<tr>
+			      		<td>年龄</td>
+			      		<td>21</td>
+			      	</tr>
+			      </table>			      
+      			</div>	
+
+  			    </div> 			
+           <!-- 选项卡结束 -->          
+			
+			
+		</div>
+	<!--	<div class="modal-footer">
+			<button type="button" class="btn bg-olive btn-xs">审核通过</button> 
+		    <button type="button" class="btn bg-olive btn-xs">审核驳回</button> 
+			<button type="button" class="btn bg-olive btn-xs">删除讲师</button> 
+			<button class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
+		</div>-->
+	  </div>
+	</div>
+</div>
+
+
+</body>
+<script type="text/javascript">
+	$(function (){
+		getData();
+	})
+	function getData() {
+		$.ajax({
+			url: "/teacherController/getTeacherList",
+			type: "get",
+			dataType: "json",
+			data: {
+				pageNumber:$("[name=pageNumber]").val(),
+				pageSize:$("[name=pageSize]").val(),
+				name: $("#name").val(),
+				levelName:$("[name=levelName]").val(),
+			},
+			success: function (obj) {
+				//console.log(obj)
+				var result = obj.data.data.result;
+
+				//console.log(result)
+				var concats = "";
+				if (obj.code == 200) {
+
+					    concats +="\t<thead>\n" +
+								"\t\t\t\t\t\t<tr>\n" +
+								"\t\t\t\t\t\t\t<th class=\"\" style=\"padding-right:0px\">\n" +
+								"\t\t\t\t\t\t\t\t<input id=\"selall\" type=\"checkbox\" class=\"icheckbox_square-blue\">\n" +
+								"\t\t\t\t\t\t\t</th>\n" +
+								"\t\t\t\t\t\t\t<th class=\"sorting_asc\">讲师ID</th>\n" +
+								"\t\t\t\t\t\t\t<!-- teacher_id -->\n" +
+								"\t\t\t\t\t\t\t<th class=\"sorting\">讲师名称</th>\n" +
+								"\t\t\t\t\t\t\t<!-- name -->\n" +
+								"\t\t\t\t\t\t\t<th class=\"sorting\">讲师等级</th>\n" +
+								"\n" +
+								"\t\t\t\t\t\t\t<th class=\"sorting\">审核状态</th>\n" +
+								"\t\t\t\t\t\t\t<!-- status 0.待审核    1.审核通过   2.审核不通过   -1.删除账户 -->\n" +
+								"\t\t\t\t\t\t\t<!-- <th class=\"text-center\">审核</th> -->\n" +
+								"\t\t\t\t\t\t\t<th class=\"text-center\">操作</th>\n" +
+								"\t\t\t\t\t\t</tr>\n" +
+								"\t\t\t\t\t</thead>";
+					for (var i = 0; i < result.length; i++) {
+						concats += "<tbody>";
+						concats += "<tr>";
+						concats +='<td><input width="10px"  type="checkbox" name="box" value="'+result[i].teacherId+'"></td>';
+						concats += "<td>" + result[i].teacherId + "</td>";
+						concats += "<td>" + result[i].name + "</td>";
+						concats += "<td>";
+						if([result[i].levelName]==1){
+							concats += "教授";
+						}
+						else if([result[i].levelName]==2){
+							concats += "副教授";
+						}
+						else if([result[i].levelName]==3){
+							concats += "金牌教师";
+						}
+						concats += "</td>";
+						concats += "<td>";
+						if([result[i].status]==0){
+							concats += "待审核";
+						}
+						else if([result[i].status]==1){
+							concats += "审核通过";
+						}
+						else if([result[i].status]==2){
+							concats += "审核不通过";
+						}
+						else if([result[i].status]==3){
+							concats += "关闭账户";
+						}
+						concats += "</td>";
+						concats += "<td>"
+						concats += "<button class='btn bg-olive btn-xs' data-toggle='modal' data-target='#sellerModal'  onclick=\'getDetail(&quot;"+result[i].teacherId+"&quot;)\'  >详情</button>";
+						concats += "</td>";
+						concats += "</tr>";
+						concats += "</tbody>";
+					}
+				}
+				buildPage(obj.data.data);
+				$("#dataList").html(concats);
+
+			},
+			error: function () {
+				alert("失败");
+			}
+		})
+	}
+	/*详情*/
+	function getDetail(teacherId){
+
+		$.ajax({
+			url:"/teacherController/getDetail/"+teacherId,
+			dataType:"json",
+			type:"get",
+			async:true,
+			success:function (obj){
+
+				var result = obj.data;
+				//console.log(result);
+				var table = "";
+				if (result.code==200){
+					table += "<input type='hidden' id='"+result.data.teacherId+"'>"
+					table += "<tr><td>教师名称</td> <td>"+result.data.name+"</td> </tr>";
+					table += "<tr><td>邮箱</td> <td>"+result.data.email+"</td> </tr>";
+					table += "<tr><td>教师手机</td> <td>"+result.data.mobile+"</td></tr>";
+					table += "<tr><td>性别</td>";
+					table += "<td>";
+					if(result.data.sex ==1){
+						table += "男";
+					}
+					else if(result.data.sex==2){
+						table += "女";
+					}
+					table += "</td></tr>";
+					table += "<tr><td>年龄</td> <td>"+result.data.age+"</td> </tr>";
+
+					table += "<div class='modal-footer'>";
+					table += "<button class='btn btn-success' onclick=\"getTeacherStatus(1,'"+result.data.teacherId+"')\"  data-dismiss='modal' aria-hidden='true'>审核通过</button>";
+					table += "<button class='btn btn-danger' onclick=\"getTeacherStatus(2,'"+result.data.teacherId+"')\"  data-dismiss='modal' aria-hidden='true'>审核未通过</button>";
+					table += "<button class='btn btn-danger' onclick=\"deleteInfo('"+result.data.teacherId+"')\"  data-dismiss='modal' aria-hidden='true'>删除讲师</button>";
+					table += "<button class='btn btn-default'   data-dismiss='modal' aria-hidden='true'>关闭</button>";
+					table += "</div>"
+				}
+				$("#dail_Id").html(table);
+			},
+			error:function (result){
+				alert("网络错误");
+			}
+		})
+	}
+	//审核
+	function getTeacherStatus(status,teacherId){
+
+		$.ajax({
+			url:"/teacherController/getStatus",
+			dataType:"json",
+			type:"put",
+			data:{teacherId:teacherId,status:status},
+			async:true,
+			success:function (result){
+				if (result.code==200){
+					alert("审核成功");
+					getData()
+				}
+
+			},
+			error:function (result){
+				alert("网络错误");
+			}
+		})
+	}
+	//删除
+	function deleteInfo(teacherId){
+		if(confirm("确认删除吗")){
+			$.ajax({
+				url:"/teacherController/deleteInfo/"+teacherId,
+				dataType:"json",
+				type:"get",
+				async:true,
+				success:function (result){
+					if (result.code==200){
+						alert("删除成功");
+						location.reload();
+					}
+
+				},
+				error:function (result){
+					alert("网络错误");
+				}
+			})
+		}
+
+	}
+</script>
+</html>

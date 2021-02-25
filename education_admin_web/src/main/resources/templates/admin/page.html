@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+
+<body>
+<ul class="pagination">
+    <li><a href="javascript:toPage(1)">首页</a></li>
+    <li><a href="javascript:toPage(2)">上一页</a></li>
+    <li><a href="javascript:toPage(3)">下一页</a></li>
+    <li><a href="javascript:toPage(4)">尾页</a></li>
+    <li>当前第<input type="text" name="pageNumber" id="pageNum" size="2">页</li>
+    <li>每页<input type="text" name="pageSize" id="pageSize" size="2">条</li>
+    <li>总<input type="text" name="totalPage" id="totalPage" size="2" readonly="readonly">页</li>
+    <li>总<input type="text" name="totalCount" id="totalCount" size="2" readonly="readonly">条</li>
+</ul>
+</body>
+<script type="text/javascript">
+    function buildPage(data){
+        //获取页面文本框并赋值 (当前页数)
+        $("#pageNum").val(data.pageNumber);
+        $("#pageSize").val(data.pageSize);
+        $("#totalPage").val(data.totalPage);
+        $("#totalCount").val(data.totalCount);
+    }
+    function toPage(flag){
+        var pageNum = parseInt($("#pageNum").val());//当前页数
+        var totalPage = parseInt($("#totalPage").val());//总页数
+        if(flag == 1){//首页
+            if (pageNum <= 1){//当前页数<=1
+                alert("已经是首页");
+                return;
+            }
+            $("#pageNum").val(1);
+        }else if (flag == 2){//上一页
+            if (pageNum <= 1){
+                alert("已经是第一页");
+                return;
+            }
+            $("#pageNum").val(pageNum - 1);
+        }else if (flag == 3){//下一页
+            if (pageNum >= totalPage){//如果当前页数>=最后一页
+                alert("已经是最后一页");
+                return;
+            }
+            $("#pageNum").val(pageNum + 1);
+        }else if (flag == 4){
+            if (pageNum >= totalPage){
+                alert("已经是尾页");
+                return;
+            }
+            $("#pageNum").val(totalPage);
+        }
+        getData();
+    }
+</script>
+</html>

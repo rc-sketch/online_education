@@ -1,0 +1,151 @@
+<html>
+<!-- ztree-->
+<link rel="stylesheet" type="text/css" href="../js/zTreev3/css/zTreeStyle/zTreeStyle.css"/>
+<script type="text/javascript" src="../js/zTreev3/js/jquery.ztree.all.js"></script>
+<head>
+    <title>Title</title>
+    <script>
+    //菜单树
+    var setting = {
+        async: {
+        enable: true,
+        url: "/menu/getzTree",
+        autoParam: ["id", "name"]
+    },
+    data: {
+        simpleData: {
+        enable: true
+        }
+    },
+    check: {
+        enable: true,
+        autoCheckTrigger: true
+    },
+    view : {
+        addHoverDom: function(treeId, treeNode){
+        var aObj = $("#" + treeNode.tId + "_a");
+        if (treeNode.editNameFlag || $("#btnGroup"+treeNode.tId).length>0)
+        return;
+        var s = '<span id="btnGroup'+treeNode.tId+'">';
+        if ( treeNode.level == 0 ) {
+                s += '<a href="#" class="btn btn-primary dropdown-toggle btn-xs" style="margin-left: 10px;" onclick="addNodes('+ treeNode.id +')" role="button">添加</a>';
+            } else if ( treeNode.level == 1 ) {
+                s += '<a href="#" class="btn btn-primary dropdown-toggle btn-xs" style="margin-left: 10px;" onclick="editNodes('+ treeNode.id +')">修改</a>';
+            if (treeNode.children == undefined) {
+                s += '<a href="#" class="btn btn-primary dropdown-toggle btn-xs" style="margin-left: 10px;" onclick="deleteNodes('+ treeNode.id +')" role="button">删除</a>';
+            }
+                s += '<a href="#" class="btn btn-primary dropdown-toggle btn-xs" style="margin-left: 10px;" onclick="addNodes('+ treeNode.id +')" role="button">添加</a>';
+            } else if ( treeNode.level == 2 ) {
+                s += '<a href="#" class="btn btn-primary dropdown-toggle btn-xs" style="margin-left: 10px;" onclick="editNodes('+ treeNode.id +')" role="button">修改</a>';
+                s += '<a href="#" class="btn btn-primary dropdown-toggle btn-xs" style="margin-left: 10px;" onclick="deleteNodes('+ treeNode.id +')" role="button">删除</a>';
+            }
+                s += '</span>';
+            aObj.after(s);
+        },
+            removeHoverDom: function(treeId, treeNode){
+                $("#btnGroup"+treeNode.tId).remove();
+            }
+        }
+    };
+    //初始化树
+    $(document).ready(function(){
+        $.fn.zTree.init($("#treeDemo"), setting);
+    });
+    //增加
+    function addNodes(id) {
+        BootstrapDialog.show({
+        title:"增加",
+        message:$("<div></div>").load("/menu/toAdd"),
+        type:BootstrapDialog.TYPE_PRIMARY,
+        size:BootstrapDialog.SIZE_WIDE,
+        buttons:[{
+            label:"增加",
+            cssClass:'btn-info',
+            action:function(dialog) {
+                $.ajax({
+                    url:"/menu/addInfoNodes",
+                    type:"post",
+                    dataType:"json",
+                    // data:{text:$("#nodeNames").val(),url:$("#nodeUrl").val(),parentid:id},
+                    data:$("#addForm").serialize() + "&parentid=" + id,
+                    success:function(data) {
+                        toastr.success("增加成功");
+                        dialog.close();
+                         $.fn.zTree.init($("#treeDemo"), setting);
+                    },
+                    error:function () {
+                        alert("系统异常,请稍后再试");
+                    }
+                });
+            }
+        }, {
+            label:"关闭",
+            // cssClass:'btn-default',
+            action:function (dialog) {
+            dialog.close();
+            }
+        }]
+        })
+    }
+    //修改
+    function editNodes(id) {
+        BootstrapDialog.show({
+        title: "修改",
+        message:$("<div></div>").load("/menu/updateById/"+ id),
+        type:BootstrapDialog.TYPE_PRIMARY,
+        size:BootstrapDialog.SIZE_WIDE,
+        buttons:[{
+            label:"增加",
+            cssClass:'btn-info',
+            action:function(dialog) {
+                $.ajax({
+                    url:"/menu/updateMenu",
+                    type:"post",
+                    dataType:"json",
+                    data:$("#updateForm").serialize(),
+                    // data:{text:$("#nodeNames").val(),url:$("#nodeUrl").val(),id:$("#id").val()},
+                    success:function(data) {
+                    toastr.success("修改成功");
+                        dialog.close();
+                        $.fn.zTree.init($("#treeDemo"), setting);
+                    },
+                    error:function () {
+                    alert("系统异常,请稍后再试");
+                    }
+                });
+            }
+            }, {
+            label:"关闭",
+            // cssClass:'btn-default',
+            action:function (dialog) {
+            dialog.close();
+            }
+        }]
+        })
+    }
+    //删除
+    function deleteNodes(id) {
+        var flag = window.confirm("确定要删除"+ id +"行吗?");
+        if (flag){
+            $.ajax({
+            url:"/menu/deleteById/" + id,
+            type:"post",
+            dataType:"json",
+            success:function(data) {
+                toastr.success("删除成功");
+                $.fn.zTree.init($("#treeDemo"), setting);
+            },
+            error:function () {
+            alert("系统异常,请稍后再试");
+            }
+            });
+        }
+    }
+    </script>
+</head>
+<body>
+    <div class="zTreeDemoBackground left">
+    <ul id="treeDemo" class="ztree"></ul>
+    </div>
+</body>
+</html>

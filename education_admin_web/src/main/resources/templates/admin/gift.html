@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- 页面meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>礼物管理</title>
+    <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="../plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../plugins/adminLTE/css/AdminLTE.css">
+    <link rel="stylesheet" href="../plugins/adminLTE/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+	<script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
+    <script src="../plugins/bootstrap/js/bootstrap.min.js"></script>
+    
+</head>
+
+<body class="hold-transition skin-red sidebar-mini" >
+  <!-- .box-body -->
+                
+                    <div class="box-header with-border">
+                        <h3 class="box-title">礼物管理     
+                       	</h3>
+                    </div>
+
+                    <div class="box-body">
+                  			 <!-- <ol class="breadcrumb">	                        	 -->
+                        		<!-- <li> -->
+		                        	<!-- <a href="#" >顶级分类列表</a>  -->
+		                        <!-- </li> -->
+		                        <!-- <li> -->
+		                       		<!-- <a href="#" >珠宝</a> -->
+		                        <!-- </li> -->
+		                        <!-- <li> -->
+		                        	<!-- <a href="#" >银饰</a> -->
+		                        <!-- </li> -->
+	                        <!-- </ol> -->
+
+                        <!-- 数据表格 -->
+                        <div class="table-box">
+							
+                            <!--工具栏-->
+                            <div class="pull-left">
+                                <div class="form-group form-inline">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-default" title="新建" data-toggle="modal" data-target="#editModal" ><i class="fa fa-file-o"></i> 新建</button>
+                                        <button type="button" class="btn btn-default" title="删除" onclick="deleteBath()" ><i class="fa fa-trash-o"></i> 删除</button>
+                                        <button type="button" class="btn btn-default" title="刷新" onclick="window.location.reload()"><i class="fa fa-check"></i> 刷新</button>
+                                       
+                                    </div>
+                                </div>
+                            </div>                          
+                       		
+                        
+			                <!--数据列表-->
+			                  <table id="dataList" class="table table-bordered table-striped table-hover dataTable">
+			                      <thead>
+
+			                      </thead>
+			                      <tbody>
+			                      </tbody>
+			                  </table>
+			                  <!--数据列表/-->                      
+						
+                        </div>
+                        <!-- 数据表格 /-->
+                </div>
+                    <!-- /.box-body -->
+              
+                                
+<!-- 编辑窗口 -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" >
+	<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			<h3 id="myModalLabel">礼物编辑</h3>
+		</div>
+		<div class="modal-body">							
+			
+			<table class="table table-bordered table-striped"  width="800px">
+		      	<tr>
+		      		<td>礼物名称</td>
+		      		<td><input  class="form-control" placeholder="礼物名称" name="giftName" id="giftName">  </td>
+		      	</tr>	
+				<tr>
+		      		<td>礼物价格</td>
+		      		<td><input  class="form-control" placeholder="礼物价格" name="price" id="price">  </td>
+		      	</tr>					
+		      	<tr>
+			 </table>				
+			
+		</div>
+		<div class="modal-footer">						
+			<button class="btn btn-success" data-dismiss="modal" aria-hidden="true" onclick="addGift()">保存</button>
+			<button class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
+		</div>
+	  </div>
+	</div>
+</div>
+
+  <!-- 修改窗口 -->
+  <div class="modal fade" id="editModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog" >
+		  <div class="modal-content">
+			  <div class="modal-header">
+				  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				  <h3 id="myModalLabel1">礼物修改</h3>
+			  </div>
+			  <div class="modal-body">
+
+				  <table class="table table-bordered table-striped"  width="800px">
+					  <tr>
+						  <td>礼物名称</td>
+						  <td><input  class="form-control" placeholder="礼物名称" name="giftName" id="updateGiftName">  </td>
+						  <td><input  type="hidden" name="id" id="updateId">  </td>
+					  </tr>
+					  <tr>
+						  <td>礼物价格</td>
+						  <td><input  class="form-control" placeholder="礼物价格" name="price" id="updatePrice">  </td>
+					  </tr>
+					  <tr>
+				  </table>
+
+			  </div>
+			  <div class="modal-footer">
+				  <button class="btn btn-success" data-dismiss="modal" aria-hidden="true" onclick="updateGiftInfo()">保存</button>
+				  <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
+			  </div>
+		  </div>
+	  </div>
+  </div>
+</body>
+</html>
+<script type="text/javascript">
+	// 批量删除
+	function deleteBath(){
+		// 获取复选框
+		let name = document.getElementsByName("box1");
+		// 遍历复选框 判断选中的
+		let ids = [];
+		for (let i = 0; i < name.length; i++) {
+			if (name[i].checked){
+				ids.push(name[i].value);
+			}
+		}
+		// 判断是否存在需要删除的数据
+		if (ids.length <= 0){
+			alert("请选择");
+			return ;
+		}
+		$.ajax({
+		    url : "/giftController/deleteBatch/" + ids,
+		    type : "delete",
+		    dataType : "json",
+		    async : true,
+		    success : function (result){
+		        if (result.code==200){
+		            alert("删除成功");
+		            location.reload();
+		        }else{
+		        	alert("删除失败");
+				}
+		    },
+		    error : function (){
+		        alert("网络异常");
+		    }
+		})
+	}
+	$(function (){
+		getData();
+	})
+	// 查询礼物
+	function getData() {
+		$.ajax({
+			url: "/giftController/getGiftList",
+			type: "get",
+			dataType: "json",
+			async:false,
+			success: function (obj) {
+				let result = obj.data.data;
+				//console.log(result)
+				let concats = "";
+				if (obj.code == 200) {
+					concats +=" <thead>\n" +
+							"\t\t\t                          <tr>\n" +
+							"\t\t\t                              <th class=\"\" style=\"padding-right:0px\">\n" +
+							"\t\t\t                                  <input type=\"checkbox\" class=\"icheckbox_square-blue\">\n" +
+							"\t\t\t                              </th> \n" +
+							"\t\t\t\t\t\t\t\t\t\t  <th class=\"sorting_asc\">礼物ID</th>\n" +
+							"\t\t\t\t\t\t\t\t\t      <th class=\"sorting\">礼物名称</th>\t\t\t\t\t\t\t\t\t   \t\t\t\t\t\n" +
+							"\t\t\t\t\t\t\t\t\t      <th class=\"sorting\">价格</th>\t\t\t\t\t\t\t\t\t   \t\t\t\t\t\n" +
+							"\t\t\t\t\t                      <th class=\"text-center\">操作</th>\n" +
+							"\t\t\t                          </tr>\n" +
+							"\t\t\t                      </thead>";
+					for (let i = 0; i < result.length; i++) {
+						concats += "<tbody>";
+						concats += "<tr>";
+						concats +='<td><input width="10px"  type="checkbox" name="box1" value="'+result[i].id+'"></td>';
+						concats += "<td>" + result[i].id + "</td>";
+						concats += "<td>" + result[i].giftName + "</td>";
+						concats += "<td>" + result[i].price + "</td>";
+
+						concats += "<td class=\"text-center\">";
+						concats += "<button type=\"button\" class=\"btn bg-olive btn-xs\" data-toggle=\"modal\" data-target=\"#editModal1\" onclick=\'updateGift("+result[i].id +")\'>修改</button>";
+						concats += "</td>";
+						concats += "</tr>";
+						concats += "</tbody>";
+					}
+				}
+				$("#dataList").html(concats);
+
+			},
+			error: function () {
+				alert("失败");
+			}
+		})
+	}
+	
+	// 增加
+	function addGift(){
+		let giftName = $("#giftName").val();
+		let price = $("#price").val();
+		$.ajax({
+		    url : "/giftController/addGift",
+		    type : "post", 
+		    dataType : "json",
+			data:{
+		    	giftName:giftName,
+				price:price,
+			},
+		    async : true,
+		    success : function (result){
+				if (result.code==200){
+					alert("增加成功");
+					location.reload();
+				}else{
+					alert("增加失败");
+				}
+		    },
+		    error : function (){
+		        alert("网络异常");
+		    }
+		})
+	}
+
+	//条件查询(回显)
+	function updateGift(id) {
+		$.ajax({
+			url: "/giftController/getInfoByGiftId/" + id,
+			dataType: "json",
+			type: "post",
+			success: function (result) {
+				var id = result.data.data.id;
+				var giftName = result.data.data.giftName;
+				var price = result.data.data.price
+				$("#updateId").val(id);
+				$("#updateGiftName").val(giftName);
+				$("#updatePrice").val(price);
+			},
+			error: function (result) {
+				alert("系统异常,请联系管理员");
+			}
+		})
+	}
+	//修改
+	function updateGiftInfo() {
+		var id = $("#updateId").val();
+		var giftName = $("#updateGiftName").val();
+		var price = $("#updatePrice").val();
+		$.ajax({
+			url: "/giftController/updateGiftInfo",
+			dataType: "json",
+			type: "post",
+			data:{id:id,giftName:giftName,price:price},
+			success: function (result) {
+				alert(result.message);
+				location.reload();
+			},
+			error: function (result) {
+				alert("系统异常,请联系管理员");
+			}
+		})
+	}
+</script>

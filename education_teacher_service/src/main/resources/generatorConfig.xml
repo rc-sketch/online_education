@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <classPathEntry
+            location="D:\javaSoftWare\Repository\mysql\mysql-connector-java\5.1.8\mysql-connector-java-5.1.8.jar"/>
+    <context id="DB2Tables" targetRuntime="MyBatis3">
+
+        <commentGenerator>
+            <property name="suppressAllComments" value="true"></property>
+        </commentGenerator>
+
+
+        <!-- 设定数据库连接 -->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://127.0.0.1:3306/online_education"
+                        userId="root"
+                        password="thyyzh">
+        </jdbcConnection>
+
+
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+
+        <!--  生成 bean 存放的位置 model  -->
+        <javaModelGenerator targetPackage="com.oe.pojo" targetProject="..\education_api\src\main\java">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+<!--        &lt;!&ndash; 生成的mapper文件的位置 &ndash;&gt;-->
+<!--        <sqlMapGenerator targetPackage="mapper" targetProject=".\src\main\resources">-->
+<!--            <property name="enableSubPackages" value="true"/>-->
+<!--        </sqlMapGenerator>-->
+
+<!--        &lt;!&ndash; 生成的mapper.xml 对应的那个mapper接口的存放位置  &ndash;&gt;-->
+<!--        <javaClientGenerator type="XMLMAPPER" targetPackage="com.dongdongshop.mapper" targetProject=".\src\main\java">-->
+<!--            <property name="enableSubPackages" value="true"/>-->
+<!--        </javaClientGenerator>-->
+
+
+        <!--  设定反向生成的表 -->
+
+       <table tableName="fact_course_sell"></table>
+       <table tableName="fact_teacher_course"></table>
+       <table tableName="tab_address"></table>
+       <table tableName="tab_cash_account"></table>
+       <table tableName="tab_cash_log"></table>
+       <table tableName="tab_content_arrange"></table>
+       <table tableName="tab_operate_record"></table>
+       <table tableName="tab_order"></table>
+       <table tableName="tab_order_item"></table>
+       <table tableName="tab_pay_log"></table>
+       <table tableName="tab_seckill_order"></table>
+       <table tableName="tab_student_achievement"></table>
+       <table tableName="tab_teacher_student"></table>
+       <table tableName="tab_user_score_account"></table>
+       <table tableName="tab_user_score_detail"></table>
+       <table tableName="tab_user_score_use"></table>
+
+
+
+
+    </context>
+</generatorConfiguration>

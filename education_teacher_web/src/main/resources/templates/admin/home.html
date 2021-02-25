@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- 页面meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>后台管理系统</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport"> 
+    <link rel="stylesheet" href="../plugins/bootstrap/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="../plugins/adminLTE/css/AdminLTE.css">
+    <link rel="stylesheet" href="../plugins/adminLTE/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+
+    <!--echars-->
+    <script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
+    <script src="/js/plugins/jquery/jquery.min.js"></script>
+    <!--<script src="static/js/echarts.min.js"></script>-->
+    <script src="https://cdn.staticfile.org/echarts/4.3.0/echarts.min.js"></script>
+
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+
+   <!-- 内容区域 -->
+            <!-- 内容头部 -->
+            <section class="content-header">
+                <h1>
+                    控制面板
+                    <small>首页</small>
+                </h1>
+                <ol class="breadcrumb">
+                    <li><a href="/toIndex"><i class="fa fa-dashboard"></i> 首页</a></li>
+                </ol>
+            </section>
+            <!-- 内容头部 /-->
+
+            <!-- 正文区域 -->
+            <section class="content">
+
+                <!-- 统计数值 -->
+                <div class="row">
+                    <div class="col-lg-3 col-xs-6">
+                        <!-- small box -->
+                        <div id="main" style="width: 800px;height:400px;font-size: 20px"></div>
+                    </div>
+                </div>
+                <!-- /.row -->
+            </section>
+            <!-- 正文区域 /-->
+
+        <!-- 内容区域 /-->
+</body>
+
+</html>
+<script type="text/javascript">
+    $(function () {
+        getMonthlySales();
+    })
+
+    // function getMonthlySales() {
+    //     var myChart = echarts.init(document.getElementById('main'));
+    //     $.ajax({
+    //         url: "/courseController/getMonthlySales",
+    //         type: "post",
+    //         dataType: "json",
+    //         async: false,
+    //         success: function (result) {
+    //             //console.log(result)
+    //             var fee = result.data.data;
+    //             console.log(fee)
+    //             var freeList = [];
+    //             for (let i = 0; i < 12; i++) {
+    //                 freeList.push(fee[i].postFee);
+    //             }
+    //             // // var hb = result.data.hb;
+    //             // // var tb = result.data.tb;
+    //             var colors = ['#f3d957', '#d14a61'];//可以设置颜色,多个系列可以写多个
+    //             myChart.setOption({
+    //                 color: colors,
+    //                 title: {
+    //                     text: '月度销课订单实时报表',
+    //                     left: 'center',
+    //                     align: 'right'
+    //                 },
+    //                 tooltip: {
+    //                     trigger: 'axis',
+    //                     formatter: function (params, ticket, callback) {
+    //                         console.log(params)
+    //                         /* alert(year.length)*/
+    //                         var vigue = '';
+    //                         vigue += "销量:" + fee[params[0].dataIndex].postFee + "<br>";
+    //                         // vigue += "环比增长:" + hb[params[0].dataIndex] + "%<br>";
+    //                         // vigue += "同比增长:" + tb[params[0].dataIndex] + "%<br>";
+    //                         return vigue;
+    //                     }
+    //                 },
+    //                 legend: {
+    //                     data: ['销量'],
+    //                     left: 10,
+    //                     toolbox: {
+    //                         show: true,
+    //                         orient: 'vertical',
+    //                         left: 'right',
+    //                         top: 'center',
+    //                         feature: {
+    //                             mark: {show: true},
+    //                             dataView: {show: true, readOnly: false},
+    //                             magicType: {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+    //                             restore: {show: true},
+    //                             saveAsImage: {show: true}
+    //                         }
+    //                     },
+    //                 },
+    //                 xAxis: {
+    //                     name: "月份/2020",
+    //                     data: ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"]
+    //                 },
+    //                 yAxis: {name: "销量"},
+    //                 series: [{
+    //                     name: "销量", type: "line", data: freeList
+    //                 }],
+    //             })
+    //         }
+    //     })
+    //
+    // }
+    function getMonthlySales() {
+        var myChart = echarts.init(document.getElementById('main'));
+        $.ajax({
+            url: "/courseController/getMonthlySales",
+            type: "post",
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                console.log(result.data.data);
+                var fee = result.data.data.fee;
+                var hb = result.data.data.hb;
+                var tb = result.data.data.tb;
+                console.log(fee);
+                console.log(hb);
+                console.log(tb);
+                var colors = [ '#f3d957', '#d14a61'];//可以设置颜色,多个系列可以写多个
+                myChart.setOption({
+                    color : colors,
+                    title: {
+                        text: '月度订单实时报表',
+                        left: 'center',
+                        align: 'right'
+                    },
+                    tooltip: {
+                        trigger : 'axis',
+                        formatter: function (params, ticket, callback) {
+                            //console.log(params[0].dataIndex)
+                            /* alert(year.length)*/
+                            var vigue = '';
+                            vigue += "销量:" + fee[params[0].dataIndex] +"<br>";
+                            vigue += "环比增长:" + hb[params[0].dataIndex] + "%<br>";
+                            vigue += "同比增长:" + tb[params[0].dataIndex] + "%<br>";
+                            return vigue;
+                        }
+                    },
+                    legend: {
+                        data:['销量'],
+                        left: 10,
+                        toolbox: {
+                            show: true,
+                            orient: 'vertical',
+                            left: 'right',
+                            top: 'center',
+                            feature: {
+                                mark: {show: true},
+                                dataView: {show: true, readOnly: false},
+                                magicType: {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+                                restore: {show: true},
+                                saveAsImage: {show: true}
+                            }
+                        },
+                    },
+                    xAxis: {name: "月份/2020",data: ["1月","2月","3月","4月","5月","6月","7月","8月","9月","10月","11月","12月"]},
+                    yAxis: {name: "销量"},
+                    series: [{
+                        name: "销量", type: "line",data: fee
+                    }],
+                })
+
+            }
+        })
+
+    }
+</script>
